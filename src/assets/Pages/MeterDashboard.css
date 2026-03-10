@@ -25,9 +25,6 @@
       flex: 1;
 }
 
-.logo-vishakha{
-  
-}
 
 .logo-vishakha img{
     height: 50px;
@@ -62,7 +59,7 @@
 .aa{
       position: relative;
   z-index: 1;
-    background-color: #2177f396;
+    background-color: #25175d;
 
 }
 
@@ -74,7 +71,7 @@
   height: 100%;
   object-fit: cover;
 
-  opacity: 0.2;   /* transparency */
+  opacity: 0.1;   /* transparency */
   z-index: -2;
 }
 

@@ -157,14 +157,18 @@ export default function MeterDashboard({ meterId, date }) {
           title="Currents"
           items={[
             { label: "C1", value: latest.current_i1, unit: "Amp" },
+            { label: <>C1 <span className="Avg-label">Avg</span></>, value: avg.current_i1, unit: "Amp" },
             { label: "C2", value: latest.current_i2, unit: "Amp" },
+            { label: <>C2 <span className="Avg-label">Avg</span></>, value: avg.current_i2, unit: "Amp" },
             { label: "C3", value: latest.current_i3, unit: "Amp" },
+            { label: <>C3 <span className="Avg-label">Avg</span></>, value: avg.current_i3, unit: "Amp" },
           ]}
         />
         <StatGroup
           title="Frequency"
           items={[
             { label: "Frequency", value: latest.frequency, unit: "Hz" },
+            { label: <>Frequency <span className="Avg-label">Avg</span></>, value: avg.frequency, unit: "Hz" },
 
           ]}
         />
@@ -172,6 +176,7 @@ export default function MeterDashboard({ meterId, date }) {
           title="Power Factor"
           items={[
             { label: "Power Factor", value: latest.power_factor, unit: "" },
+            { label: <>Power Factor <span className="Avg-label">Avg</span></>, value: avg.power_factor, unit: "" },
 
           ]}
         />
@@ -180,14 +185,18 @@ export default function MeterDashboard({ meterId, date }) {
           title="Power"
           items={[
             { label: "Active Power", value: latest.active_power, unit: "kW" },
+              { label: <>Active Power <span className="Avg-label">Avg</span></>, value: avg.active_power, unit: "kW" },
             { label: "Apparent Power", value: latest.apparent_power, unit: "kVA" },
+              { label: <>Apparent Power <span className="Avg-label">Avg</span></>, value: avg.apparent_power, unit: "kVA" },
             { label: "Reactive Power", value: latest.reactive_power, unit: "kVAR" },
+              { label: <>Reactive Power <span className="Avg-label">Avg</span></>, value: avg.reactive_power, unit: "kVAR" },
           ]}
         />
         <StatGroup
           title="Demand"
           items={[
             { label: "kw demand", value: latest.kw_demand, unit: "kW" },
+            { label: <>kw demand <span className="Avg-label">Avg</span></>, value: avg.kw_demand, unit: "kW" },
 
           ]}
         />
@@ -195,6 +204,7 @@ export default function MeterDashboard({ meterId, date }) {
           title="Active Energy"
           items={[
             { label: "Active Energy", value: latest.active_energy, unit: "kWh" },
+            { label: <>Active Energy <span className="Avg-label">Avg</span></>, value: avg.active_energy, unit: "kWh" },
 
           ]}
         />
@@ -202,20 +212,46 @@ export default function MeterDashboard({ meterId, date }) {
           title="Harmonics"
           items={[
             { label: "THD V", value: latest.thd_v, unit: "%" },
+            { label: <>THD V <span className="Avg-label">Avg</span></>, value: avg.thd_v, unit: "%" },
             { label: "THD I", value: latest.thd_i, unit: "%" },
+            { label: <>THD I <span className="Avg-label">Avg</span></>, value: avg.thd_i, unit: "%" },
           ]}
         />
 
       </div>
 <div className="chart-select"><div className="chart-selection-btn">
-  <button onClick={() => setSelectedChart('Voltages')}>Voltages</button>
-  <button onClick={() => setSelectedChart('Currents')}>Currents</button>
-  <button onClick={() => setSelectedChart('Frequency')}>Frequency</button>
-  <button onClick={() => setSelectedChart('Power Factor')}>Power Factor</button>
-  <button onClick={() => setSelectedChart('Power')}>Power</button>
-  <button onClick={() => setSelectedChart('Demand')}>Demand</button>
-  <button onClick={() => setSelectedChart('Active Energy')}>Active Energy</button>
-  <button onClick={() => setSelectedChart('Harmonics')}>Harmonics</button>
+  <button 
+    onClick={() => setSelectedChart('Voltages')}
+    style={{ backgroundColor: selectedChart === 'Voltages' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Voltages' ? 'white' : 'black' }}
+  >Voltages</button>
+  <button 
+    onClick={() => setSelectedChart('Currents')}
+    style={{ backgroundColor: selectedChart === 'Currents' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Currents' ? 'white' : 'black' }}
+  >Currents</button>
+  <button 
+    onClick={() => setSelectedChart('Frequency')}
+    style={{ backgroundColor: selectedChart === 'Frequency' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Frequency' ? 'white' : 'black' }}
+  >Frequency</button>
+  <button 
+    onClick={() => setSelectedChart('Power Factor')}
+    style={{ backgroundColor: selectedChart === 'Power Factor' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Power Factor' ? 'white' : 'black' }}
+  >Power Factor</button>
+  <button 
+    onClick={() => setSelectedChart('Power')}
+    style={{ backgroundColor: selectedChart === 'Power' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Power' ? 'white' : 'black' }}
+  >Power</button>
+  <button 
+    onClick={() => setSelectedChart('Demand')}
+    style={{ backgroundColor: selectedChart === 'Demand' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Demand' ? 'white' : 'black' }}
+  >Demand</button>
+  <button 
+    onClick={() => setSelectedChart('Active Energy')}
+    style={{ backgroundColor: selectedChart === 'Active Energy' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Active Energy' ? 'white' : 'black' }}
+  >Active Energy</button>
+  <button 
+    onClick={() => setSelectedChart('Harmonics')}
+    style={{ backgroundColor: selectedChart === 'Harmonics' ? '#007bff' : '#f8f9fa', color: selectedChart === 'Harmonics' ? 'white' : 'black' }}
+  >Harmonics</button>
 
 </div></div>
       <MeterChart
