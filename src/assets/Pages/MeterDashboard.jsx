@@ -12,23 +12,52 @@ export default function MeterDashboard({ meterId, date }) {
 
   const [data, setData] = useState(null);
   const [selectedChart, setSelectedChart] = useState('Voltages');
+  const [selectedMeter, setSelectedMeter] = useState('HT1METER2');
+const [selectedDate, setSelectedDate] = useState('2026-03-13');
+const [meters, setMeters] = useState([]);
+const [searchMeter, setSearchMeter] = useState('HT1METER2');
+const [searchDate, setSearchDate] = useState('2026-03-12');
 
-  useEffect(() => {
 
-    async function loadData() {
+const handleSearch = () => {
+  setSearchMeter(selectedMeter);
+  setSearchDate(selectedDate);
+};
 
-      const res = await getMeterData({
-        meterId: meterId,
-        date: date
-      });
+useEffect(() => {
 
-      setData(res);
+  async function loadMeters() {
+    try {
+      const res = await fetch("http://localhost:3000/api/ems/navigation/all/meters");
+      const json = await res.json();
 
+      setMeters(json.data);
+    } catch (err) {
+      console.error("Failed to load meters", err);
     }
+  }
 
-    loadData();
+  loadMeters();
 
-  }, [meterId, date]);
+}, []);
+
+useEffect(() => {
+
+  if (!searchMeter || !searchDate) return;
+
+  async function loadData() {
+
+    const res = await getMeterData({
+      meterId: searchMeter,
+      date: searchDate
+    });
+
+    setData(res);
+  }
+
+  loadData();
+
+}, [searchMeter, searchDate]);
 
   if (!data) return <div>Loading...</div>;
 
@@ -131,15 +160,43 @@ export default function MeterDashboard({ meterId, date }) {
       <div className="headerbar">
 
         <div className="logo-vishakha"><img src="/vishakha.jpg" alt="" /></div>
-        <div className="date-selection"><button>Yesterday</button> <button>Today</button>  <input type="date" /></div>
-        <div><h2>Panel:{data.panel_id} | Meter: {data.meter_id}</h2>  <select name="panel-id" id=""> <option value=""></option></select></div>
+       <div className="date-selection">
+
+<select className="meter-selection-dropdown"
+  value={selectedMeter}
+  onChange={(e) => setSelectedMeter(e.target.value)}
+>
+  <option value="">Select Meter</option>
+
+  {meters.map((meter) => (
+    <option key={meter} value={meter}>
+      {meter}
+    </option>
+  ))}
+
+</select>
+
+<input
+  type="date"
+  value={selectedDate}
+  onChange={(e) => setSelectedDate(e.target.value)}
+/>
+
+<button onClick={handleSearch}>
+  Search
+</button>
+
+</div>
+        <div><h4>
+Panel:{data.panel_id} | Meter: {data.meter_name} | Date: {data.date}
+</h4>  </div>
         <div className="logo-mq"><img src="/multiquadrant.jpg" alt="" /></div>
       </div>
 
       <div className="card-parameter">
 
      <StatGroup
-  title="Voltages"
+    title="Voltages"
   items={[
     { label: "V1", value: latest.voltage_v1, unit: "V" },
     { label: <>V1 <span className="Avg-label">Avg</span></>, value: avg.voltage_v1, unit: "V" },
@@ -156,12 +213,12 @@ export default function MeterDashboard({ meterId, date }) {
         <StatGroup
           title="Currents"
           items={[
-            { label: "C1", value: latest.current_i1, unit: "Amp" },
-            { label: <>C1 <span className="Avg-label">Avg</span></>, value: avg.current_i1, unit: "Amp" },
-            { label: "C2", value: latest.current_i2, unit: "Amp" },
-            { label: <>C2 <span className="Avg-label">Avg</span></>, value: avg.current_i2, unit: "Amp" },
-            { label: "C3", value: latest.current_i3, unit: "Amp" },
-            { label: <>C3 <span className="Avg-label">Avg</span></>, value: avg.current_i3, unit: "Amp" },
+            { label: "I1", value: latest.current_i1, unit: "Amp" },
+            { label: <>I1 <span className="Avg-label">Avg</span></>, value: avg.current_i1, unit: "Amp" },
+            { label: "I2", value: latest.current_i2, unit: "Amp" },
+            { label: <>I2 <span className="Avg-label">Avg</span></>, value: avg.current_i2, unit: "Amp" },
+            { label: "I3", value: latest.current_i3, unit: "Amp" },
+            { label: <>I3 <span className="Avg-label">Avg</span></>, value: avg.current_i3, unit: "Amp" },
           ]}
         />
         <StatGroup

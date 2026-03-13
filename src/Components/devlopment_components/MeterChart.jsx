@@ -86,7 +86,7 @@ export default function MeterChart({ title, x, series, yTitle }) {
   return (
     <div className="chart-container">
 
-      <h3>{title}</h3>
+     <h3>{title}</h3>
 
       <Chart
         options={options}

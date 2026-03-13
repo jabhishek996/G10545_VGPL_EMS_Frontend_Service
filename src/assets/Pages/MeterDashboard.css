@@ -38,7 +38,7 @@
     padding: 10px 20px;
     border: none;
     background-color: #e9e4fbfc;
-    color: #0568d1;
+    color: #e35e9e;
     cursor: pointer;
     font-weight: 600;
 }
@@ -77,3 +77,24 @@
 
 .Avg-label{color: green;
 font-weight: 600;}
+
+
+.stat-group:hover h3 {
+  color: rgb(192, 61, 116); 
+  transition: color 0.3s ease-in-out;/* change to any color you want */
+}
+
+.date-selection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.meter-selection-dropdown {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e9e4fbfc;
+    color: #045dbd;
+    cursor: pointer;
+    font-weight: 600;
+}
