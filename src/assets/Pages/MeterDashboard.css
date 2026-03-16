@@ -98,3 +98,9 @@ font-weight: 600;}
     cursor: pointer;
     font-weight: 600;
 }
+
+.id_info h4{
+    color: #525353;
+    border: 1px dashed #a7aca9;
+    padding: 5px
+}

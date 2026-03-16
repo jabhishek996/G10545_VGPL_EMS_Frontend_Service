@@ -7,13 +7,15 @@ import "./MeterDashboard.css";
 
 import StatGroup from "../../Components/devlopment_components/StatGroup.jsx";
 import MeterChart from "../../Components/devlopment_components/MeterChart.jsx";
+import BarChart from "../../Components/devlopment_components/BarChart.jsx";
+
 
 export default function MeterDashboard({ meterId, date }) {
 
   const [data, setData] = useState(null);
   const [selectedChart, setSelectedChart] = useState('Voltages');
-  const [selectedMeter, setSelectedMeter] = useState('HT1METER2');
-const [selectedDate, setSelectedDate] = useState('2026-03-13');
+  const [selectedMeter, setSelectedMeter] = useState('HT1METER5');
+const [selectedDate, setSelectedDate] = useState('2026-03-16');
 const [meters, setMeters] = useState([]);
 const [searchMeter, setSearchMeter] = useState('HT1METER2');
 const [searchDate, setSearchDate] = useState('2026-03-12');
@@ -183,20 +185,20 @@ useEffect(() => {
 />
 
 <button onClick={handleSearch}>
-  Search
+  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#3148ac"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
 </button>
 
 </div>
-        <div><h4>
-Panel:{data.panel_id} | Meter: {data.meter_name} | Date: {data.date}
+        <div className="id_info"><h4>
+Panel:{data.panel_id} | Meter: {data.meter_id} | Date: {data.date}
 </h4>  </div>
         <div className="logo-mq"><img src="/multiquadrant.jpg" alt="" /></div>
       </div>
 
       <div className="card-parameter">
-
+ `               `
      <StatGroup
-    title="Voltages"
+    title="Voltages" 
   items={[
     { label: "V1", value: latest.voltage_v1, unit: "V" },
     { label: <>V1 <span className="Avg-label">Avg</span></>, value: avg.voltage_v1, unit: "V" },
@@ -317,6 +319,13 @@ Panel:{data.panel_id} | Meter: {data.meter_name} | Date: {data.date}
         series={chartData.series}
         yTitle={chartData.yTitle}
       />
+
+<BarChart
+  title={chartData.title}
+  x={cont.date_time}
+  series={chartData.series}
+  yTitle={chartData.yTitle}
+/>
 
     </div>
   );
