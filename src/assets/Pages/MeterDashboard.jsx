@@ -21,9 +21,42 @@ const [searchMeter, setSearchMeter] = useState('HT1METER2');
 const [searchDate, setSearchDate] = useState('2026-03-12');
 
 
-const handleSearch = () => {
-  setSearchMeter(selectedMeter);
-  setSearchDate(selectedDate);
+const handleSearch = async () => {
+
+  if (!selectedMeter || !selectedDate) {
+    alert("Please select meter and date");
+    return;
+  }
+
+  try {
+
+    const res = await getMeterData({
+      meterId: selectedMeter,
+      date: selectedDate
+    });
+
+    // check if valid data exists
+    if (
+      !res ||
+      !res.latest_reading ||
+      !res.continues_readings ||
+      !res.avg_reading ||
+      !res.continues_readings.date_time ||
+      res.continues_readings.date_time.length === 0
+    ) {
+      alert("No data found for selected meter and date");
+      return; // stop here → state will NOT change
+    }
+
+    // if data valid → update states
+    setSearchMeter(selectedMeter);
+    setSearchDate(selectedDate);
+    setData(res);
+
+  } catch (error) {
+    console.error("API error:", error);
+    alert("Failed to fetch data");
+  }
 };
 
 useEffect(() => {
@@ -63,9 +96,9 @@ useEffect(() => {
 
   if (!data) return <div>Loading...</div>;
 
-  const latest = data.latest_reading;
-  const cont = data.continues_readings;
-  const avg = data.avg_reading;
+const latest = data?.latest_reading || {};
+const cont = data?.continues_readings || {};
+const avg = data?.avg_reading || {};
 
   const getChartData = (type) => {
     switch (type) {
@@ -196,7 +229,7 @@ Panel:{data.panel_id} | Meter: {data.meter_id} | Date: {data.date}
       </div>
 
       <div className="card-parameter">
- `               `
+ 
      <StatGroup
     title="Voltages" 
   items={[
